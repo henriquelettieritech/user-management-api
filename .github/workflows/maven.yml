@@ -1,0 +1,30 @@
+# Arquivo: .github/workflows/ci.yml
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      # Este comando compila sua aplicação (o pacote)
+      run: mvn -B package --file pom.xml -DskipTests
+
+    - name: Run Tests (Opcional, mas recomendado)
+      # Remova a linha "echo..." se você tiver testes unitários.
+      run: echo "Skipping tests for initial CI setup."
